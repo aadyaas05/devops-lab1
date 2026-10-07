@@ -1,4 +1,4 @@
-pipeline {
+/pipeline {
     agent any
 
     stages {
@@ -16,12 +16,13 @@ pipeline {
         }
 
         stage('Deploy') {
-            steps {
-                sh 'docker run -d --name devops-lab-container devops-lab-app'
-            }
-        }
+    steps {
+        sh '''
+            docker rm -f devops-lab-container 2>/dev/null || true
+            docker run -d --name devops-lab-container devops-lab-app
+        '''
     }
-
+}
     post {
         success {
             echo 'Pipeline completed successfully!'
