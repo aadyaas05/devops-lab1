@@ -16,19 +16,21 @@ pipeline {
         }
 
         stage('Deploy') {
-    steps {
-        sh '''
-            docker rm -f devops-lab-container 2>/dev/null || true
-            docker run -d --name devops-lab-container devops-lab-app
-        '''
+            steps {
+                sh '''
+                    docker rm -f devops-lab-container 2>/dev/null || true
+                    docker run -d --name devops-lab-container devops-lab-app
+                '''
+            }
+        }
     }
-}
+
     post {
         success {
-            echo 'Pipeline completed successfully!'
+            echo 'Application deployed successfully!'
         }
         failure {
-            echo 'Pipeline failed!'
+            echo 'Deployment failed!'
         }
     }
 }
